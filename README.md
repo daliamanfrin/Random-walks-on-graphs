@@ -1,1 +1,18 @@
-# Chr
+# Random walks on graphs
+The aim of this work is to explore the behavior of movement of particles in a simple network. The particles perform a random walk, moving across nodes. The structure of a graph can be used to model many real life situations, among which traffic dynamics. Nodes can be used to represent the transport facilities of the network such as roads, highways, airports and so on; and through the edges all or part of the population can travel among the linked nodes. The stochastic dynamics of the particles can then be studied as a mean to get properties of the populationA dynamics for the transport network, and the occupation of the nodes. <br/> 
+In particular, the network considered in this work is a 2-regular graph: a linear disposition of nodes with periodic boundary conditions, a structure equivalent to a ring. In this case, the random walk behavior represents an equal probability for a particle to move either to its left or right neighboring node. The movement of the particles and the occupation of the nodes can be modeled with the evolution of a distribution function, and for some specific cases a master equation can be written in a simple form. <br /> 
+
+<p align="center">
+<img src="https://latex.codecogs.com/svg.image?\frac{\partial\rho}{\partial&space;t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^&plus;_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" title="\frac{\partial\rho}{\partial t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^+_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" />
+</p>
+
+From the master equation one gets the stationary state, a solution for which the system maintains a constant probability flux, and one can sometimes obtain the detailed balance condition, where a balance condition is achieved on every edge of the network.
+The simplest case for a random walk on a graph is for ISTC (infinite storage and transport capacity) networks, where there is no limitation to the number of particles that nodes can contain and the number of particles that links can transport. In this case transition probabilities are independent from the state of the network. This is the case of $n$ non-interacting particles, and we can simulate the solution of the master equation for the average dynamics.
+To model congestion effects, we need to move to the case where transport and storage capacity are constrained. In this case the transition rates, and consequently the flow, depend on the state of the graph. In a transport network, this could mean that a street can only allow a certain number of vehicles, an airport a certain number of airplanes and so on. 
+This type of networks have both a finite transportation capacity (FTC) and finite
+storage capacity (FSC), meaning that only a finite number of particles can be sent from
+one node to another connected node at a time, and that up to a finite number of particle
+can stack on the same node at the same time.
+These boundaries can be modeled using the Heaviside Theta function in the master equation.
+After the imposing of constraints, the probability to obtain an empty or a full node are not negligible. In this case the behavior of the system depends on the number of particles initially posed on the network.
+If the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: nodes close to an occupancy of $0$, nodes close to the storage capacity limit, and nodes in the middle. Finally, the random walk is simulated to confirm the stationary distribution behavior on the nodes matches the expected theoretical outcomes.
