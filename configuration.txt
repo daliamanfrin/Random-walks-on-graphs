@@ -1,5 +1,18 @@
 [Simulation]
 num_nodes = 20
-initial_particles = 2
+initial_particles = 5
 n_max = 20
 num_time_steps = 1000
+n_movers = 2
+dynamics_type = synchronous  
+
+[settings]
+bin_width = 1
+hist_color = mediumslateblue
+plot_title = Particle Count Distribution
+x_label = Particle Count
+y_label = Frequency
+
+[paths]
+particle_data = C:/Users/Dalia/Desktop/particle_counts.npy
+output_image = C:/Users/Dalia/Desktop/m_big_4.png
