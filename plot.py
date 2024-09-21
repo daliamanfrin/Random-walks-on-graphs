@@ -7,10 +7,15 @@ Created on Thu Sep 13 2024
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
+import sys
+from sys import argv
+import configparser
 
 # Paths for input and output
-source = 'C:/Users/Dalia/Desktop/project/particle_counts.npy'
-destination = 'C:/Users/Dalia/Desktop/project/distribution.png'
+configurat = configparser.ConfigParser()
+configurat.read(sys.argv[1])
+source = configurat.get('paths','simulation_data')
+destination =  configurat.get('paths','output_image')
 
 # Load particle counts results
 particle_counts = np.load(source, allow_pickle=True)

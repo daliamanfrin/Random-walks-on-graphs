@@ -1,10 +1,13 @@
+import random_walk
 import configparser
-from randomwalk import initialize_network, synchronous_simulation, one_step_process, random_direction
 import numpy as np
+import sys
+from sys import argv
+
 
 # Load configuration
 config = configparser.ConfigParser()
-config.read('C:/Users/Dalia/Desktop/project/configuration.txt')
+config.read(sys.argv[1])
 
 # Read parameters from the configuration file
 num_nodes = config.getint('Simulation', 'num_nodes')
@@ -15,13 +18,13 @@ n_movers = config.getint('Simulation', 'n_movers')
 dynamics_type = config.get('Simulation', 'dynamics_type')  # 'synchronous' or 'one_step'
 
 # Initialize the network
-network = initialize_network(num_nodes, initial_particles)
+network = random_walk.initialize_network(num_nodes, initial_particles)
 
 # Run the simulation for valid dynamics type
 if dynamics_type == 'synchronous':
-    particle_counts = synchronous_simulation(network, num_nodes, n_movers, n_max, num_time_steps, random_direction)
+    particle_counts = random_walk.synchronous_simulation(network, num_nodes, n_movers, n_max, num_time_steps, random_walk.random_direction)
 elif dynamics_type == 'one_step':
-    particle_counts = one_step_process(network, num_nodes, n_movers, n_max, num_time_steps, random_direction)
+    particle_counts = random_walk.one_step_process(network, num_nodes, n_movers, n_max, num_time_steps, random_walk.random_direction)
 else:
     raise ValueError("Invalid dynamics type specified in configuration file.")
 
