@@ -33,6 +33,5 @@ The file plots contains the function that plots the counts of the states (from 0
 # Usage
 To use the program:
 1. Choose desired configuration (both parameters and dynamics type) in configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.
-These are the steps in order to start the program and to plot the results:
 2. Run the simulation file with first argument the configuration file, for example "python simulation.py configuration.txt". This produces and saves a file (.npy) with stored particle counts.
 4. To visualize the distribution of abundances plot, run the plotting file using the produced data. Syntax is, like before "python plot.py configuration.txt". Here data is loaded from the configuration file through local paths and then are saved in the images folder.
