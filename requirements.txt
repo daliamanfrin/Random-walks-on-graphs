@@ -3,3 +3,11 @@ numpy
 networkx
 scipy
 seaborn
+configparser
+random
+sys
+
+#for testing
+pytest
+unittest
+hypothesis
