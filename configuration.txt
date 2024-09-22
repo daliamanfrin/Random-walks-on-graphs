@@ -1,4 +1,4 @@
-[Simulation]
+[settings]
 N = 40
 M = 5
 n_max = 30

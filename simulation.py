@@ -4,18 +4,20 @@ import numpy as np
 import sys
 from sys import argv
 
-
 # Load configuration
 config = configparser.ConfigParser()
 config.read(sys.argv[1])
 
 # Read parameters from the configuration file
-N = config.getint('Simulation', 'N')
-M = config.getint('Simulation', 'M')
-n_max = config.getint('Simulation', 'n_max')
-num_time_steps = config.getint('Simulation', 'num_time_steps')
-n_movers = config.getint('Simulation', 'n_movers')
-dynamics_type = config.get('Simulation', 'dynamics_type')  # 'synchronous' or 'one_step'
+N = config.getint('settings', 'N')
+M = config.getint('settings', 'M')
+n_max = config.getint('settings', 'n_max')
+num_time_steps = config.getint('settings', 'num_time_steps')
+n_movers = config.getint('settings', 'n_movers')
+dynamics_type = config.get('settings', 'dynamics_type')  # 'synchronous' or 'one_step'
+
+# Get paths from the configuration file
+simulation_data_path = config.get('paths', 'simulation_data')
 
 # Initialize the network
 network = random_walk.initialize_network(N, M)
@@ -29,5 +31,5 @@ else:
     raise ValueError("Invalid dynamics type specified in configuration file.")
 
 # Save results for plotting
-with open('C:/Users/Dalia/Desktop/project/particle_counts.npy', 'wb') as f:
+with open(simulation_data_path, 'wb') as f:
     np.save(f, particle_counts)
