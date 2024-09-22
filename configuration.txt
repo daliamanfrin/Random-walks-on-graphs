@@ -1,7 +1,7 @@
 [Simulation]
-num_nodes = 20
-initial_particles = 5
-n_max = 20
+N = 40
+M = 5
+n_max = 30
 num_time_steps = 1000
 n_movers = 2
 dynamics_type = synchronous  

@@ -12,7 +12,7 @@ def initialize_network(N, M):
     list: A list representing the initial state of the network.
     
     Raises:
-    ValueError: If N or M are not positive integers.
+    ValueError: If N or M are degenerate or non valid.
     """
     
     if not isinstance(N, int) or N <= 1:
