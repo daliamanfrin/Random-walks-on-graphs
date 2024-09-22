@@ -19,16 +19,16 @@ If the particles are initially uniformly distributed among nodes, three distinct
 
 
 # Structure
-
-The file random_walk contains the definition of all the functions, from the initialization of the network to the simulation of the random walk. For every iteration or time step, random walk is performed, the state each node is in (the number of particles it contains) is computed and saved. Then, the distribution of the states is obtained.
+The file random_walk contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
 
 The testing file tests the functions in the previous file, using hypotesis, to ensure correct behavior.
 
-The configuration.txt file contains the definitions of the parameters used in the simulation, such as number of nodes, initial number of particle per node (supposing uniform distibution), the number of particles allowed to move for each node, for each timestep; but also the paths to save and load results data and plots.as number of spins per lattice (N*M), temperature intervals and so on. Furthermore, there are the local paths in order to load the array data and to save them as images and graphs
+The configuration.txt file contains the definitions of the parameters used in the simulation, such as number of nodes, initial number of particle per node (supposing uniform distibution), the number of particles allowed to move for each node, for each timestep; but also the paths to save and load results data and plots. 
 
-The file simulation there is the main part of the code, where I have used the functions of ising file in order to calculate the energy and the magnetization of a configuration of spins for a range of temperatures across the critical one Tc, showing a steeply decrease in energy from high temperatures to low ones and a rapidly increase in magnetization, a clear sign of a phase transition. In addition there is the calculation of the different states of the configuration of spins for a given temperatrue, lower than Tc, respect to time, which shows that the system coarsens toward the configuration of all spins aligned; then I saved these states in an array to process them in further data analysis. Here I used the ConfigParser library in order to import the configuration file from command line, and passing its parameters to the program.
+The file simulation contains the main part of the code. The ConfigParser library is used in order to import the configuration file from command line, and passing its parameters to the program. For every iteration or time step, random walk is performed: for each node the state each node is in (the number of particles it contains) is computed and saved. Then, the distribution of the states is obtained. 
 
 The file plots contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
+
 
 # Usage
 To use the program:
