@@ -8,10 +8,11 @@ from hypothesis import given, settings
 @settings(max_examples=5)
 def test_initialize_network(N, M):
     network = random_walk.initialize_network(N, M)
+    
     # Check that the network has the correct number of nodes
-    assert len(network) == N
+    if len(network) != N:
+        raise ValueError(f"Expected {N} nodes, but got {len(network)}.")
+    
     # Check that each node has M particles
-    assert all(particles == M for particles in network)
-
-if __name__ == "main":
-    pass    
+    if not all(particles == M for particles in network):
+        raise ValueError(f"Expected each node to have {M} particles.")
