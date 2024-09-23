@@ -33,7 +33,7 @@ def get_neighbor_index(current_node, N, direction):
     return (current_node + 1) % N if direction == 1 else (current_node - 1) % N
 
 
-def move_particles(network, current_node, N, n_movers, n_max, random_direction, update_network):
+def move_particles(network, current_node, n_movers, n_max, random_direction, update_network):
     """
     Move a specified number of particles from the current node to its neighboring nodes.
     
@@ -49,6 +49,7 @@ def move_particles(network, current_node, N, n_movers, n_max, random_direction, 
     Returns:
     list: Updated network after attempting to move particles from the current node.
     """
+    N = len(network)
     movers = min(network[current_node], n_movers)  # Determine how many particles can move
     for _ in range(movers):
         direction = random_direction()  # Get the random direction for the walk
@@ -59,7 +60,7 @@ def move_particles(network, current_node, N, n_movers, n_max, random_direction, 
     return update_network
 
 
-def synchronous_simulation(network, N, n_movers, n_max, num_time_steps, random_direction):
+def synchronous_simulation(network, n_movers, n_max, num_time_steps, random_direction):
     """
     Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
     
@@ -74,19 +75,20 @@ def synchronous_simulation(network, N, n_movers, n_max, num_time_steps, random_d
     Returns:
     list: History of particle counts for each node at each time step.
     """
+    N = len(network)
     particle_counts = []
     
     for _ in range(num_time_steps):
         new_network = network.copy()  # Create a copy of the network for synchronous update
         for current_node in range(N):
-            new_network = move_particles(network, current_node, N, n_movers, n_max, random_direction, new_network)
+            new_network = move_particles(network, current_node, n_movers, n_max, random_direction, new_network)
         network = new_network.copy()  # Update the original network after all nodes have moved
         particle_counts.append(network.copy())  # Save the state after each time step
     
     return particle_counts
 
 
-def one_step_process(network, N, n_movers, n_max, num_time_steps, random_direction):
+def one_step_process(network, n_movers, n_max, num_time_steps, random_direction):
     """
     Simulate the particle movement using a one-step process, where the network is updated after each node completes its move.
     
@@ -101,11 +103,12 @@ def one_step_process(network, N, n_movers, n_max, num_time_steps, random_directi
     Returns:
     list: History of particle counts for each node at each time step.
     """
+    N = len(network)
     particle_counts = []
     
     for _ in range(num_time_steps):
         for current_node in range(N):
-            network = move_particles(network, current_node, N, n_movers, n_max, random_direction, network)
+            network = move_particles(network, current_node, n_movers, n_max, random_direction, network)
             particle_counts.append(network.copy())  # Update and save the network after each node moves
     
     return particle_counts

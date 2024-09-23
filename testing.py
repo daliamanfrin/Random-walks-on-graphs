@@ -58,7 +58,6 @@ def test_get_neighbor_index(current_node, N, direction):
     # Ensure current_node is within bounds of the network
     current_node = current_node % N
     
-    # Call the function being tested
     neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
     
     # Check for valid return values
@@ -103,7 +102,7 @@ def test_synchronous_simulation(N, M, n_movers, n_max, num_time_steps):
     # Create initial network with random particle counts
     initial_network = random_walk.initialize_network(N, M)  
     
-    history = random_walk.synchronous_simulation(initial_network, N, n_movers, n_max, num_time_steps, random_walk.random_direction)
+    history = random_walk.synchronous_simulation(initial_network, n_movers, n_max, num_time_steps, random_walk.random_direction)
     
     # Check that the history length matches the number of time steps
     assert len(history) == num_time_steps, "History length does not match the number of time steps."
@@ -129,7 +128,7 @@ def test_one_step_process(N, M, n_movers, n_max, num_time_steps):
     # Create initial network with random particle counts
     initial_network = random_walk.initialize_network(N, M)  
     
-    history = random_walk.one_step_process(initial_network, N, n_movers, n_max, num_time_steps, random_walk.random_direction)
+    history = random_walk.one_step_process(initial_network, n_movers, n_max, num_time_steps, random_walk.random_direction)
     
     # Check that the history length matches the number of time steps
     assert len(history) == num_time_steps * N, "History length does not match the expected number of time steps."
@@ -162,8 +161,8 @@ def test_move_particles(N,M, n_movers,n_max, num_time_steps):
     # Run the `move_particles` function multiple times
     for _ in range(num_time_steps):
         for current_node in range(N):
-            network = random_walk.move_particles(network, N,M, n_movers,n_max, num_time_steps,
-                                                 random_direction=lambda: 1,  # Example direction mock
-                                                )  
+            network = random_walk.move_particles(network, M, n_movers,n_max, num_time_steps,
+                                                 random_direction=lambda: 1)   # Example direction mock
+                                                 
 
     assert sum(network) == sum(initial_state) #Total number of particles should remain constant
