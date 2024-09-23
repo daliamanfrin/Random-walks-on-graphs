@@ -1,5 +1,6 @@
 import random_walk
 import configparser
+import numpy as np
 import hypothesis
 from hypothesis import strategies as st
 from hypothesis import given, settings
@@ -17,6 +18,10 @@ config = load_configuration('configuration.txt')
 # Extract values from the configuration
 N_config = int(config['settings']['N'])
 M_config = int(config['settings']['M'])
+n_max_config = int(config['settings']['n_max'])
+num_time_steps_config = int(config['settings']['num_time_steps'])
+n_movers_config = int(config['settings']['n_movers'])
+
 
 @given(N=st.integers(min_value=2, max_value=N_config), 
        M=st.integers(min_value=1, max_value=M_config))
@@ -86,3 +91,30 @@ def test_random_direction():
         result = random_walk.random_direction()
         assert result == 1, f"Expected 1, but got {result}"
 
+@given(
+    N=st.integers(min_value=2, max_value=N_config),
+    M=st.integers(min_value=1, max_value=M_config), 
+    n_movers=st.integers(min_value=1, max_value=n_movers_config),  
+    n_max=st.integers(min_value=1, max_value=n_max_config), 
+    num_time_steps=st.integers(min_value=1, max_value=num_time_steps_config) 
+)
+@settings(max_examples=5)
+def test_synchronous_simulation(N, M, n_movers, n_max, num_time_steps):
+    # Create initial network with random particle counts
+    initial_network = random_walk.initialize_network(N, M)  
+    
+    # Run the synchronous simulation
+    history = random_walk.synchronous_simulation(initial_network, N, n_movers, n_max, num_time_steps, random_walk.random_direction)
+    
+    # Check that the history length matches the number of time steps
+    assert len(history) == num_time_steps, "History length does not match the number of time steps."
+    
+    # Check that the total number of particles is conserved
+    total_particles_initial = sum(initial_network)
+    total_particles_final = sum(history[-1])
+    assert total_particles_initial == total_particles_final, "Total number of particles should be conserved."
+    
+    # Check that no node exceeds the maximum number of particles allowed and the number of particles is never negative
+    for state in history:
+        assert all(p <= n_max for p in state), f"Particle count exceeds n_max in state {state}."
+        assert all(p >= 0 for p in state), f"Particle count is negative in state {state}."
