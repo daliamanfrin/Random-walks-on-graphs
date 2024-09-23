@@ -48,14 +48,14 @@ def move_particles(network, current_node, N, n_movers, n_max, random_direction):
     Returns:
     list: Updated network after attempting to move particles from the current node.
     """
-    # Set the number of movers to n_movers if occupaancy is sufficient, else to the present particle
+    # Set the number of movers to n_movers if occupancy is sufficient, else use the present particle
     movers = min(network[current_node], n_movers)
     for _ in range(movers):
-        direction = random_direction()  # Use the passed function to get the random direction
-        neighbor = get_neighbor_index(current_node, N, direction)
+        direction = random_direction()  # Get the random direction for the walk
+        neighbor = get_neighbor_index(current_node, N, direction) # Choose left or right neighbor based on random direction
         if network[neighbor] < n_max:
-            network[current_node] -= 1
-            network[neighbor] += 1
+            network[current_node] -= 1 # Remove a particle from the current node
+            network[neighbor] += 1 # Add a particle to the neighbor
     return network
 
 
@@ -81,7 +81,7 @@ def synchronous_simulation(network, N, n_movers, n_max, num_time_steps, random_d
         for current_node in range(N):
             new_network = move_particles(new_network, current_node, N, n_movers, n_max, random_direction)
         network = new_network
-        particle_counts.append(network.copy())
+        particle_counts.append(network.copy()) # For synchronous dynamics, the state is updated only after every node has performed movement
     
     return particle_counts
 
@@ -106,12 +106,10 @@ def one_step_process(network, N, n_movers, n_max, num_time_steps, random_directi
     for _ in range(num_time_steps):
         for current_node in range(N):
             network = move_particles(network, current_node, N, n_movers, n_max, random_direction)
-        particle_counts.append(network.copy())
+            particle_counts.append(network.copy()) # For a one-step process the network is updated after every movement
     
     return particle_counts
 
-
-# Function to be used during actual simulation, generates a random direction (0 or 1)
 def random_direction():
     """
     Generate a random direction for particle movement (0 for left, 1 for right).

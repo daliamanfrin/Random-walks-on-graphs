@@ -1,10 +1,10 @@
 [settings]
 N = 40
-M = 5
+M = 3
 n_max = 30
 num_time_steps = 1000
-n_movers = 2
-dynamics_type = synchronous  
+n_movers = 1
+dynamics_type = one_step
 
 
 [paths]
