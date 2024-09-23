@@ -19,7 +19,7 @@ If the particles are initially uniformly distributed among nodes, three distinct
 
 
 # Structure
-The file random_walk contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
+The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
 
 The testing file tests the functions in the previous file, using hypotesis, to ensure correct behavior.
 
