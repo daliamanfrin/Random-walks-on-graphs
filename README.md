@@ -27,7 +27,7 @@ The [configuration](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/
 
 The file [simulation](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/simulation.py) contains the main part of the code. The ConfigParser library is used in order to import the configuration file from command line, and passing its parameters to the program. For every iteration or time step, random walk is performed: for each node the state each node is in (the number of particles it contains) is computed and saved. Then, the distribution of the states is obtained. 
 
-The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plots.py) contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
+The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plot.py) contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
 
 
 # Usage
