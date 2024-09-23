@@ -20,7 +20,7 @@ M_config = int(config['settings']['M'])
 
 @given(N=st.integers(min_value=2, max_value=N_config), 
        M=st.integers(min_value=1, max_value=M_config))
-@settings(max_examples=1)
+@settings(max_examples=5)
 def test_initialize_network(N, M):
     try:
         # Normal case: Valid values for N and M
@@ -41,8 +41,35 @@ def test_initialize_network(N, M):
         elif M < 1:
             assert str(e) == f"M must be >= 1. Received: {M}"
         else:
-            raise  # Unexpected exception
+            raise  RuntimeError("Unexpected error occurred.")
 
+@given(
+    current_node=st.integers(min_value=0, max_value=N_config),
+    N=st.integers(min_value=2, max_value=N_config),
+    direction=st.integers(min_value=0, max_value=1)
+)
+@settings(max_examples=5)
+def test_get_neighbor_index(current_node, N, direction):
+    # Ensure current_node is within bounds of the network
+    current_node = current_node % N
+    
+    # Call the function being tested
+    neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
+    
+    # Check for valid return values
+    assert 0 <= neighbor_index < N, f"Neighbor index {neighbor_index} is out of bounds for network size {N}."
+    
+    if direction == 1:
+        # Moving to the right, so the neighbor should be (current_node + 1) % N
+        expected_neighbor = (current_node + 1) % N
+    else:
+        # Moving to the left, so the neighbor should be (current_node - 1) % N
+        expected_neighbor = (current_node - 1) % N
+
+    assert neighbor_index == expected_neighbor, (
+        f"Expected neighbor index {expected_neighbor}, but got {neighbor_index} "
+        f"for current_node {current_node}, N {N}, direction {direction}."
+    )
 
 def test_random_direction():
     """
