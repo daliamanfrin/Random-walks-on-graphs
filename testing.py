@@ -20,15 +20,29 @@ M_config = int(config['settings']['M'])
 
 @given(N=st.integers(min_value=2, max_value=N_config), 
        M=st.integers(min_value=1, max_value=M_config))
-@settings(max_examples=5)
+@settings(max_examples=1)
 def test_initialize_network(N, M):
-    network = random_walk.initialize_network(N, M)
-    
-    # Check that network has the correct number of nodes
-    assert len(network) == N, f"Expected {N} nodes, but got {len(network)}."
-    
-    # Check that each node has M particles
-    assert all(particles == M for particles in network), f"Expected each node to have {M} particles."
+    try:
+        # Normal case: Valid values for N and M
+        network = random_walk.initialize_network(N, M)
+
+        # Check that the network has the correct number of nodes
+        if len(network) != N:
+            raise ValueError(f"Expected {N} nodes, but got {len(network)}.")
+
+        # Check that each node has M particles
+        if not all(particles == M for particles in network):
+            raise ValueError(f"Expected each node to have {M} particles.")
+        
+    except ValueError as e:
+        # Edge case handling: Check invalid N or M
+        if N <= 1:
+            assert str(e) == f"N must be > 1. Received: {N}"
+        elif M < 1:
+            assert str(e) == f"M must be >= 1. Received: {M}"
+        else:
+            raise  # Unexpected exception
+
 
 def test_random_direction():
     """

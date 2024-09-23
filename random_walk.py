@@ -14,13 +14,7 @@ def initialize_network(N, M):
     Raises:
     ValueError: If N or M are degenerate or non valid.
     """
-    
-    if not isinstance(N, int) or N <= 1:
-        raise ValueError(f"N must be > 1. Received: {N}")
-    
-    if not isinstance(M, int) or M < 1:
-        raise ValueError(f"M must be >= 1. Received: {M}")
-    
+       
     return [M] * N
 
 
