@@ -39,6 +39,7 @@ python simulation.py configuration.txt
 ```
  This produces and saves a file (particle_counts.npy) with stored particle counts.
 4. To visualize the distribution of abundances plot, run the plotting file using the produced data. Syntax is, like before 
-```python plot.py configuration.txt
+```
+python plot.py configuration.txt
 ```
  Here data is loaded from the configuration file through local paths and then are saved in the images folder.
