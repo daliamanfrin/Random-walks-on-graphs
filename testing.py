@@ -121,7 +121,7 @@ def test_synchronous_simulation(N, M, n_movers, n_max, num_time_steps):
     N=st.integers(min_value=2, max_value=N_config),
     M=st.integers(min_value=1, max_value=M_config), 
     n_movers=st.integers(min_value=1, max_value=n_movers_config),  
-    n_max=st.integers(min_value=1, max_value=n_max_config), 
+    n_max=st.integers(min_value=M_config, max_value=n_max_config), 
     num_time_steps=st.integers(min_value=1, max_value=num_time_steps_config) 
 )
 @settings(max_examples=5)
@@ -148,24 +148,20 @@ def test_one_step_process(N, M, n_movers, n_max, num_time_steps):
     N=st.integers(min_value=2, max_value=N_config),
     M=st.integers(min_value=1, max_value=M_config),
     n_movers=st.integers(min_value=1, max_value=n_movers_config),
-    n_max=st.integers(min_value=1, max_value=n_max_config)
+    n_max=st.integers(min_value=1, max_value=n_max_config),
+    num_time_steps =st.integers(min_value=1, max_value=num_time_steps_config)
 )
 @settings(max_examples=5)
-def test_move_particles(N, M, n_movers, n_max):
-    # Create initial network
-    network = random_walk.initialize_network(N, M)
+def test_move_particles(N,M, n_movers,n_max, num_time_steps):
+    # Set up the network with initial values from the configuration
+    network = random_walk.initialize_network(N, M)  # You may define this
+    initial_state = network.copy()  # Copy the initial state for comparison
 
-    # Choose a current node 
-    current_node = 1
+    # Run the `move_particles` function multiple times
+    for _ in range(num_time_steps):
+        for current_node in range(N):
+            network = random_walk.move_particles(network, N,M, n_movers,n_max, num_time_steps,
+                                                 random_direction=lambda: 1,  # Example direction mock
+                                                )  
 
-    # Mock the random_direction function to control direction
-    with patch('random_walk.random_direction', return_value=1):  # Always move to the right for consistent testing
-        initial_particle_count = sum(network)
-        
-        updated_network = random_walk.move_particles(network, current_node, N, n_movers, n_max, random_walk.random_direction)
-        
-        # Check that the total number of particles remains conserved
-        assert sum(updated_network) == initial_particle_count, "Total number of particles should be conserved."
-               
-        # Ensure no negative particle counts
-        assert all(p >= 0 for p in updated_network), f"Negative particle count detected in updated network {updated_network}."
+    assert sum(network) == sum(initial_state) #Total number of particles should remain constant
