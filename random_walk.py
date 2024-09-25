@@ -121,5 +121,4 @@ def random_direction():
     Returns:
     int: 0 or 1 to determine the direction of particle movement.
     """
-    random.seed(1)
     return random.randint(0, 1)

@@ -73,20 +73,6 @@ def test_get_neighbor_index(current_node, N, direction):
         f"for current_node {current_node}, N {N}, direction {direction}."
     )
 
-def test_random_direction():
-    """
-    Test that random_direction function works correctly when mocked.
-    """
-    with patch('random_walk.random_direction') as mock_random:
-        # Mock to always return 0 (direction: left)
-        mock_random.return_value = 0
-        result = random_walk.random_direction()
-        assert result == 0, f"Expected 0, but got {result}"
-
-        # Mock to always return 1 (direction: right)
-        mock_random.return_value = 1
-        result = random_walk.random_direction()
-        assert result == 1, f"Expected 1, but got {result}"
 
 @given(
     N=st.integers(min_value=2, max_value=N_config),
