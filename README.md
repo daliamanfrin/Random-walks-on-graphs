@@ -32,20 +32,20 @@ The code initializes the network with given parameters and performs a random wal
 ## Usage
 To use the program:
 1. Choose desired configuration in the configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.
-2. Run the simulation file with first argument the configuration file, for example 
+2. Run the simulation file with first argument the configuration file, for example: 
 ```
 python simulation.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This produces and saves a file (default is particle_counts.npy) with stored particle counts.
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This produces and saves a file (default is **particle_counts.npy**) with stored particle counts.
  
 3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
 python plot.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
 
 ### Example
-Examples of results valid if the case n_movers $<<$ M where the dynamics depends solely on the ratio M / n_max.
+Examples of results valid if the case `n_movers` $<<$ `M` where the dynamics depends solely on the ratio $\frac{`M`}{`n_max`}$.
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
 Note that in the synchronous dynamics, as expected, the theoretical maximal occupancy can be surpassed
 ![config](./images/resulting_occupancy.png)
