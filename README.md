@@ -12,7 +12,7 @@ one node to another connected node at a time, and that up to a finite number of 
 can stack on the same node at the same time.
 These boundaries can be modeled using a Heaviside Theta function in the master equation.
 When the particles allowed to move are small with respect to the number of particles initially posed on the network, the dynamics depends solely on the ratio between the initial number of particles and the maximal occupancy.
-Given the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: nodes close to an occupancy of $0$, nodes close to the storage capacity limit, and nodes in the middle. 
+Given the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: close to $0$, close to the storage capacity limit, and nodes with half the capacity. 
 
 
 ## Structure
@@ -34,13 +34,13 @@ To use the program:
 ```
 python simulation.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp;This produces and saves a file (particle_counts.npy) with stored particle counts.
+ &nbsp;&nbsp;&nbsp;&nbsp; This produces and saves a file (particle_counts.npy) with stored particle counts.
  
 3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
 python plot.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp;Here data is loaded from the configuration file through local paths and then are saved in the images folder.
+ &nbsp;&nbsp;&nbsp;&nbsp; Here data is loaded from the configuration file through local paths and then are saved in the images folder.
 
 ### Example
 Examples of results valid if the case n_movers $<<$ M where the dynamics depends solely on the ratio M / n_max.
