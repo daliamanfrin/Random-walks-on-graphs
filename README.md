@@ -16,15 +16,15 @@ If the particles are initially uniformly distributed among nodes, three distinct
 
 
 ## Structure
--The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
+- The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
 
--The [testing](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/testing.py) file tests the functions in the previous file, using hypotesis, to ensure correct behavior. Can be run with pytest.
+- The [testing](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/testing.py) file tests the functions in the previous file, using hypotesis, to ensure correct behavior. Can be run with pytest.
 
--The [configuration](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/configuration.txt) file contains the definitions of the parameters used in the simulation: number of nodes (N) and initial number of particle per node (M) define the network. Then simulation parameters, the number of particles allowed to move for each node (n_movers), number of timesteps (num_time_steps), maximal occupancy (n_max). The type of dynamics is to be chosen between one_step and synchronous. Lastly the paths can be set up to save results data and plots. 
+- The [configuration](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/configuration.txt) file contains the definitions of the parameters used in the simulation: number of nodes (N) and initial number of particle per node (M) define the network. Then simulation parameters, the number of particles allowed to move for each node (n_movers), number of timesteps (num_time_steps), maximal occupancy (n_max). The type of dynamics is to be chosen between one_step and synchronous. Lastly the paths can be set up to save results data and plots. 
 
--The file [simulation](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/simulation.py) contains the main part of the code. The ConfigParser library is used in order to import the configuration file from command line, and passing its parameters to the program. For every iteration or time step, random walk is performed for the occupants of the nodes, based on the chosen typ of dynamic: for each node the state each node is in (the number of particles it contains) is computed and saved. Then, the distribution of the states is obtained. 
+- The file [simulation](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/simulation.py) contains the main part of the code. The ConfigParser library is used in order to import the configuration file from command line, and passing its parameters to the program. For every iteration or time step, random walk is performed for the occupants of the nodes, based on the chosen typ of dynamic: for each node the state each node is in (the number of particles it contains) is computed and saved. Then, the distribution of the states is obtained. 
 
--The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plot.py) contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
+- The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plot.py) contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
 
 
 ## Usage
@@ -35,13 +35,14 @@ To use the program:
 python simulation.py configuration.txt
 ```
  This produces and saves a file (particle_counts.npy) with stored particle counts.
-4. To visualize the distribution of abundances plot, run the plotting file using the produced data. Syntax is, like before 
+ 
+3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
 python plot.py configuration.txt
 ```
- Here data is loaded from the configuration file through local paths and then are saved in the images folder.
+ &nbsp Here data is loaded from the configuration file through local paths and then are saved in the images folder.
 
 ### Example
-Examples of results valid if the case n_movers $<<$ M where the dynamics depends solely on the ratio M/n_max.
+Examples of results valid if the case n_movers $<<$ M where the dynamics depends solely on the ratio M / n_max.
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
 ![config](./images/resulting_occupancy.png)
