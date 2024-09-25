@@ -17,7 +17,7 @@ In this case the behavior of the system depends on the number of particles initi
 If the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: nodes close to an occupancy of $0$, nodes close to the storage capacity limit, and nodes in the middle. 
 
 
-# Structure
+## Structure
 The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. In particular, it includes different functions for the type of dynamics performed that has to be selected by the user (in configuration.txt) between one_step_process and synchronous_dynamics. 
 
 The [testing](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/testing.py) file tests the functions in the previous file, using hypotesis, to ensure correct behavior. Can be run with pytest.
@@ -29,7 +29,7 @@ The file [simulation](https://github.com/daliamanfrin/Random-walks-on-graphs/blo
 The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plot.py) contains the function that plots the counts of the states (from 0 to n_max) a node can be in. It uses the data generated during the simulation and saved. The paths of data and plots are stored in configuration.txt. 
 
 
-# Usage
+## Usage
 To use the program:
 1. Choose desired configuration (both parameters and dynamics type) in configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.
 2. Run the simulation file with first argument the configuration file, for example 
@@ -42,3 +42,7 @@ python simulation.py configuration.txt
 python plot.py configuration.txt
 ```
  Here data is loaded from the configuration file through local paths and then are saved in the images folder.
+
+
+The images show results for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks
+![alt text](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/images/resulting_occupancy.png)
