@@ -6,13 +6,13 @@ In particular, the network considered in this work is a 2-regular graph: a linea
 <img src="https://latex.codecogs.com/svg.image?\frac{\partial\rho}{\partial&space;t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^&plus;_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" title="\frac{\partial\rho}{\partial t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^+_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" />
 </p>
 
-
+Another possible type of movement in the network is the synchronous dynamics, which can be represented by a ME based on a combination of single Van Kampen Operators. The practical difference is that for every timestep all nodes are allowed to perform a movement, and only after all of them the state is updated.
 To model congestion effects, transport and storage capacity are to be constrained meaning that only a finite number of particles can be sent from
 one node to another connected node at a time, and that up to a finite number of particle
 can stack on the same node at the same time.
 These boundaries can be modeled using a Heaviside Theta function in the master equation.
-In this case the behavior of the system depends on the number of particles initially posed on the network.
-If the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: nodes close to an occupancy of $0$, nodes close to the storage capacity limit, and nodes in the middle. 
+When the particles allowed to move are small with respect to the number of particles initially posed on the network, the dynamics depends solely on the ratio between the initial number of particles and the maximal occupancy.
+Given the particles are initially uniformly distributed among nodes, three distinct scenarios are identified based on the initial number of particles on the network: nodes close to an occupancy of $0$, nodes close to the storage capacity limit, and nodes in the middle. 
 
 
 ## Structure
@@ -34,13 +34,13 @@ To use the program:
 ```
 python simulation.py configuration.txt
 ```
- This produces and saves a file (particle_counts.npy) with stored particle counts.
+ &nbsp;&nbsp;&nbsp;This produces and saves a file (particle_counts.npy) with stored particle counts.
  
 3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
 python plot.py configuration.txt
 ```
- &nbsp Here data is loaded from the configuration file through local paths and then are saved in the images folder.
+ &nbsp;&nbsp;&nbsp;Here data is loaded from the configuration file through local paths and then are saved in the images folder.
 
 ### Example
 Examples of results valid if the case n_movers $<<$ M where the dynamics depends solely on the ratio M / n_max.
