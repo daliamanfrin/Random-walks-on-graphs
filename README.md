@@ -45,7 +45,7 @@ python plot.py configuration.txt
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
 
 ### Example
-Examples of results valid if the case `n_movers` $<<$ `M` where the dynamics depends solely on the ratio $\frac{`M`}{`n_max`}$.
+Examples of results valid if the case `n_movers` $\ll$ `M` where the dynamics depends solely on the ratio `M`/`n_max`.
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
 Note that in the synchronous dynamics, as expected, the theoretical maximal occupancy can be surpassed
 ![config](./images/resulting_occupancy.png)
