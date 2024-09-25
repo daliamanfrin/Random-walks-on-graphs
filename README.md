@@ -12,7 +12,7 @@ The synchronous dynamics is less explored and it is not trivial to write a ME. I
 To model congestion effects, transport and storage capacity are to be constrained meaning that only a finite number of particles can be sent from
 one node to another connected node at a time, and that up to a finite number of particle
 can stack on the same node at the same time (capacity constraint).
-When the number of moving particles per node is small with respect to the number of particles initially posed on each node, the stationary distributions depends solely on the ratio between the initial number of particles and the maximal occupancy. Three distinct distributions are identified based on different initial occupancies: occupancy close to $0$, close to the capacity, and half the capacity. 
+When the number of moving particles per node is small with respect to the number of particles initially posed on each node, the stationary distributions depends solely on the relation between the initial number of particles and the maximal occupancy. Three distinct distributions are identified based on different initial occupancies: occupancy close to $0$, close to the capacity, and half the capacity. 
 For the one-step process, it can be shown that the three solutions can be derived from the maximum entropy principle.
 
 
@@ -45,7 +45,7 @@ python plot.py configuration.txt
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
 
 ### Example
-Examples of results valid if the case `n_movers`$\ll$`M` where the dynamics depends solely on the ratio `M`/`n_max`.
+Examples of results valid if the case `n_movers`$\ll$`M` where the dynamics depends solely on the relation between `M` and `n_max`.
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
 Note that in the synchronous dynamics, as expected, the theoretical maximal occupancy can be surpassed
 ![config](./images/resulting_occupancy.png)
