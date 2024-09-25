@@ -42,3 +42,7 @@ python simulation.py configuration.txt
 python plot.py configuration.txt
 ```
  Here data is loaded from the configuration file through local paths and then are saved in the images folder.
+
+
+#Results
+![alt text](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/images/resulting_occupancy.png)
