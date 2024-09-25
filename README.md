@@ -16,7 +16,7 @@ When the number of moving particles per node is small with respect to the number
 For the one-step process, it can be shown that the three solutions can be derived from the maximum entropy principle.
 
 
-The code initializes the network with given parameters and performs a random walk based on the type of chosen dynamics. For each timestep, it cycles through the nodes. For each node, the moving particles randomly choose a neighbor and jump to it if its occupancy is less than the maximal one. If the chosen number of moving particles are available, they all move, else only the ones available move. Depending obn the dynamics, after every movement or after every node has performed a movement, the network is updated and the state (occupancy) for each node are counted. What we get is a histogram that represent the most likely states throuughout the simulation.
+The code initializes the network with given parameters and performs a random walk based on the type of chosen dynamics. For each timestep, it cycles through the nodes. For each node, the moving particles randomly choose a neighbor and jump to it if its occupancy is less than the maximal one. If the chosen number of moving particles are available, they all move, else only the ones available move. Depending on the dynamics, after every movement or after every node has performed a movement, the network is updated and the state (occupancy) for each node are counted. What we get is a histogram that represent the most likely states throuughout the simulation.
 ## Structure
 - The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. Functions include the generation of a random direction, the choice of the neighbor based on that direction, and the definition of a function for performing the jumps for a single node (`move_particles`). Finally the two functions for the types of dynamics, which both use `move_particles`.
 
@@ -45,7 +45,7 @@ python plot.py configuration.txt
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
 
 ### Example
-Examples of results valid if the case `n_movers` $\ll$ `M` where the dynamics depends solely on the ratio `M`/`n_max`.
+Examples of results valid if the case `n_movers`$\ll$`M` where the dynamics depends solely on the ratio `M`/`n_max`.
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
 Note that in the synchronous dynamics, as expected, the theoretical maximal occupancy can be surpassed
 ![config](./images/resulting_occupancy.png)
