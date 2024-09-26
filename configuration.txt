@@ -3,7 +3,6 @@ N = 50
 M = 5
 n_max = 40
 time_steps = 2000
-n_movers = 3
 dynamics_type = synchronous
 
 
