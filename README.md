@@ -42,7 +42,7 @@ python simulation.py configuration.txt
 ```
 python plot.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path provided in the configuration file through local paths and then are saved in the images folder.
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path and the plot is saved (default: in images folder).
 
 ### Example
 Examples of results valid if the case `n_movers`$\ll$`M` where the dynamics depends solely on the relation between `M` and `n_max`.
