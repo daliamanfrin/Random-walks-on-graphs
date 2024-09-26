@@ -3,7 +3,7 @@ import configparser
 import numpy as np
 import sys
 from sys import argv
-
+random.seed(1)
 # Load configuration
 config = configparser.ConfigParser()
 config.read(sys.argv[1])
