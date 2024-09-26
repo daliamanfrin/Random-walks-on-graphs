@@ -1,9 +1,3 @@
-"""
-Created on Thu Sep 13 2024
-
-@author: Dalia Manfrin
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
@@ -31,13 +25,12 @@ def plot_particle_distribution():
     
     plt.figure(figsize=(6, 4))
     sns.set(style="whitegrid")
+    # Plot frequencies of states through the simulation
     sns.histplot(data, bins=bins, kde=False, color='mediumslateblue')
     
     # Label the axes and set the title
     plt.xlabel('Particle Count', fontsize=13)
     plt.ylabel('Frequency', fontsize=13)
-    
-    # Set custom x-ticks
     labels = np.arange(0, bins.max(), 5)
     plt.gca().set_xticks(labels)
     
