@@ -41,17 +41,18 @@ def get_neighbor_index(current_node, N, direction):
     # Get the neighbor based on the direction of the random walk step
     return (current_node + 1) % N if direction == 1 else (current_node - 1) % N
 
+
 def move_particle(network, current_node, neighbor):
     """
     Move a particle from the current node to its neighbor and return the updated network.
     
     Args:
-    network (list): The current state of the network with particle counts.
+    network (list): State of the network.
     current_node (int): The node from which the particle is moved.
     neighbor (int): The neighboring node to which the particle is moved.
     
     Returns:
-    list: The updated network after the particle move.
+    list: State of the network after the particle move.
     """
     # Create a copy of the network (to avoid modifying the original directly)
     updated_network = network.copy()
@@ -68,30 +69,34 @@ def synchronous_simulation(network, n_max, time_steps, random_direction):
     Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
 
     Args:
-    network (list): The initial state of the network with particle counts.
+    network (list): Initial state of the network.
     n_max (int): Maximum allowed particles per node.
     time_steps (int): Number of time steps to simulate.
     random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
 
     Returns:
-    list: History of particle counts for each node at each time step.
+    list: History of particle counts.
     """
     N = len(network)
     particle_counts = []
     particle_counts.append(network.copy())
     for time in range(time_steps):
-        update_network = network.copy()  # Copy network for synchronous updates
+        # Copy network for synchronous updates
+        update_network = network.copy()  
         for current_node in range(N):
-            direction = random_direction()  # Get random direction
-            neighbor = get_neighbor_index(current_node, N, direction)  # Get neighbor index
-
-            # Only move if neighbor has capacity
+            # Get random direction
+            direction = random_direction()  
+            # Get neighbor index
+            neighbor = get_neighbor_index(current_node, N, direction)  
+            # Only move if neighbor has capacity and current node is not empty
             if network[neighbor] < n_max and network[current_node] > 0:
-                update_network = move_particle(update_network, current_node, neighbor)  # Move the particle
-
-        network = update_network  # Update the network with the new state
+                # Move the particle
+                update_network = move_particle(update_network, current_node, neighbor) 
+        # Update the network with the new state after all nodes displacements
+        network = update_network  
+        # Let the system stabilize
         if time > 1000:
-            particle_counts.append(network.copy())  # Record the network state after 200 time steps
+            particle_counts.append(network.copy())  
 
     return particle_counts
 
@@ -101,28 +106,31 @@ def one_step_process(network, n_max, time_steps, random_direction):
     Simulate the particle movement using a one-step process, where the network is updated after each node completes its move.
 
     Args:
-    network (list): The initial state of the network with particle counts.
+    network (list): Initial state of the network with particle counts.
     n_max (int): Maximum allowed particles per node.
     time_steps (int): Number of time steps to simulate.
     random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
 
     Returns:
-    list: History of particle counts for each node at each time step.
+    list: History of particle counts.
     """
     N = len(network)
     particle_counts = []
     particle_counts.append(network.copy())
     for time in range(time_steps):
         for current_node in range(N):
-            if network[current_node] >= 0:
-                direction = random_direction()  # Get random direction
-                neighbor = get_neighbor_index(current_node, N, direction)  # Get neighbor index
-
+            if network[current_node] > 0:
+                # Get random direction
+                direction = random_direction()  
+                # Get neighbor index
+                neighbor = get_neighbor_index(current_node, N, direction)  
+                # Only move if neighbor has capacity and current node is not empty
                 if network[neighbor] < n_max and network[current_node] > 0:
-                    network = move_particle(network, current_node, neighbor)  # Move the particle
+                    # Move the particle
+                    network = move_particle(network, current_node, neighbor)  
+                # Let the system stabilize
                 if time > 1000:
-                    particle_counts.append(network.copy())  # Record the network state after each move
-
+                    particle_counts.append(network.copy())  
     return particle_counts  
 
 
