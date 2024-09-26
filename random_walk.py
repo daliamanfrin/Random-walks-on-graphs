@@ -12,8 +12,10 @@ def initialize_network(N, M):
     list: A list representing the initial state of the network.
     
     Raises:
-    ValueError: If N or M are degenerate or non valid.
+    ValueError: If N or M are non valid.
     """
+    if N < 1 or M < 1:
+        raise ValueError(f"Number of nodes and particles per node should be at least 1, got N = {N} and M = {M}")
     # Initialize the network with parameters from configuration   
     return [M] * N
 
@@ -56,7 +58,7 @@ def move_particles(network, current_node, n_movers, n_max, random_direction, upd
     for _ in range(movers):
         # Get the random direction for the walk
         direction = random_direction()  
-        # Choose neighbor based on random direction
+        # Choose neighbor based the direction
         neighbor = get_neighbor_index(current_node, N, direction)
         # Only move if neighbor has capacity 
         if network[neighbor] < n_max:  
@@ -67,7 +69,7 @@ def move_particles(network, current_node, n_movers, n_max, random_direction, upd
     return update_network
 
 
-def synchronous_simulation(network, n_movers, n_max, num_time_steps, random_direction):
+def synchronous_simulation(network, n_movers, n_max, time_steps, random_direction):
     """
     Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
     
@@ -76,7 +78,7 @@ def synchronous_simulation(network, n_movers, n_max, num_time_steps, random_dire
     N (int): Total number of nodes in the network.
     n_movers (int): Maximum number of particles that can be moved from each node.
     n_max (int): Maximum number of particles a node can hold.
-    num_time_steps (int): Number of time steps to simulate.
+    time_steps (int): Number of time steps to simulate.
     random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
     
     Returns:
@@ -85,12 +87,12 @@ def synchronous_simulation(network, n_movers, n_max, num_time_steps, random_dire
     N = len(network)
     particle_counts = []
     
-    for time in range(num_time_steps):
+    for time in range(time_steps):
         new_network = network.copy()  
         for current_node in range(N):
             # Perform movement for a node
             new_network = move_particles(network, current_node, n_movers, n_max, random_direction, new_network)
-        # Update the original network after all nodes have moved
+        # Update the original network after all nodes have moved particles
         network = new_network.copy() 
         # Let the system stabilize 
         if time > 200 : 
@@ -100,7 +102,7 @@ def synchronous_simulation(network, n_movers, n_max, num_time_steps, random_dire
     return particle_counts
 
 
-def one_step_process(network, n_movers, n_max, num_time_steps, random_direction):
+def one_step_process(network, n_movers, n_max, time_steps, random_direction):
     """
     Simulate the particle movement using a one-step process, where the network is updated after each node completes its move.
     
@@ -109,7 +111,7 @@ def one_step_process(network, n_movers, n_max, num_time_steps, random_direction)
     N (int): Total number of nodes in the network.
     n_movers (int): Maximum number of particles that can be moved from each node.
     n_max (int): Maximum number of particles a node can hold.
-    num_time_steps (int): Number of time steps to simulate.
+    time_steps (int): Number of time steps to simulate.
     random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
     
     Returns:
@@ -118,13 +120,13 @@ def one_step_process(network, n_movers, n_max, num_time_steps, random_direction)
     N = len(network)
     particle_counts = []
     
-    for time in range(num_time_steps):
+    for time in range(time_steps):
         for current_node in range(N):
             # Perform movement for a node
             network = move_particles(network, current_node, n_movers, n_max, random_direction, network)
             # Let the system stabilize
             if time > 200 :
-                # Update and save the network after each node moves
+                # Update and save the network after each node moves particles
                 particle_counts.append(network.copy())  
     
     return particle_counts
