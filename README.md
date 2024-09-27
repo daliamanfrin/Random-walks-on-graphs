@@ -29,7 +29,7 @@ The code initializes the network with given parameters and performs a random wal
 
 ## Usage
 To use the program:
-1. Choose desired configuration in the configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.
+1. Choose desired configuration in the configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.<br/> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N.B the first 1000 timesteps are used to stabilize the network, use `time_steps` $> 1000$.
 2. Run the simulation file with first argument the configuration file, for example: 
 ```
