@@ -35,7 +35,7 @@ N.B the first 1000 timesteps are used to stabilize the network, use `time_steps`
 ```
 python simulation.py configuration.txt
 ```
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; This produces and saves a file (default is **particle_counts.npy**) with stored particle counts.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; This produces and saves a file (default is **particle_counts.npy**) with stored particle counts.
  
 3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
