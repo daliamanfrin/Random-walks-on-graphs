@@ -44,6 +44,6 @@ python plot.py configuration.txt
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; Here data is loaded from path and the plot is saved (default: in images folder).
 
 ### Example
-Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a half-filled, almost empty and almost congested networks.
-Note that in the synchronous dynamics, as expected, the theoretical maximal occupancy can be surpassed
+Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a almost empty, almost congested and half-filled networks.
+Note that in the synchronous dynamics the theoretical maximal occupancy can be surpassed
 ![config](./images/resulting_occupancy.png)
