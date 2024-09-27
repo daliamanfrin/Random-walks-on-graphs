@@ -30,12 +30,12 @@ The code initializes the network with given parameters and performs a random wal
 ## Usage
 To use the program:
 1. Choose desired configuration in the configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.<br/> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N.B the first 1000 timesteps are used to stabilize the network, use `time_steps` $> 1000$.
+N.B the first 1000 timesteps are used to stabilize the network, use `time_steps` $> 1000$.
 2. Run the simulation file with first argument the configuration file, for example: 
 ```
 python simulation.py configuration.txt
 ```
- &nbsp;&nbsp;&nbsp; This produces and saves a file (default is **particle_counts.npy**) with stored particle counts.
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; This produces and saves a file (default is **particle_counts.npy**) with stored particle counts.
  
 3. To visualize the distributions plot, run the plotting file using the produced data. Syntax is, like before 
 ```
