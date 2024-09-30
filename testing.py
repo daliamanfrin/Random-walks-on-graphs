@@ -2,6 +2,7 @@ import random_walk
 import configparser
 import numpy as np
 import random
+import pytest
 import hypothesis
 from hypothesis import strategies as st
 from hypothesis import assume
@@ -22,22 +23,53 @@ n_max_config = int(config['settings']['n_max'])
 time_steps_config = int(config['settings']['time_steps'])
 
 @given(N=st.integers(min_value=1, max_value=N_config), 
-       M=st.integers(min_value=1, max_value=M_config),
-       n_max=st.integers(min_value=M_config, max_value=n_max_config))
-@settings(max_examples=5)
+       M=st.integers(min_value=1, max_value=n_max_config), 
+       n_max=st.integers(min_value=1, max_value=n_max_config))
+@settings(max_examples=50)
 def test_initialize_network(N, M, n_max):
-    # Initialize the network with N nodes and M particles
-    network = random_walk.initialize_network(N, M, n_max)
-    # Test that the network has the correct number of nodes
-    assert len(network) == N
-    # Test that each node has M particles at the momemnt of initialization
-    assert all(state == M for state in network)
-        
+    """
+    Test the `initialize_network` function.
+
+    Args:
+    N (int): Number of nodes in the network.
+    M (int): Number of particles in each node at the start.
+    n_max (int): Maximum allowed particles per node.
+
+    Tests:
+    Invalid case: The function raises a `ValueError` when `M > n_max`.
+    Valid case: The network has the correct number of nodes (N).
+                Each node is initialized with the correct number of particles (M).
+    
+    """
+    if M > n_max:
+        # If M is greater than n_max, a ValueError should be raised
+        with pytest.raises(ValueError):
+            random_walk.initialize_network(N, M, n_max)
+    else:
+        network = random_walk.initialize_network(N, M, n_max)
+        # Test the network has the correct number of nodes
+        assert len(network) == N
+        # Test each node has M particles at the moment of initialization
+        assert all(state == M for state in network)
+
+
 @given(current_node=st.integers(min_value=1, max_value=N_config),
     N=st.integers(min_value=1, max_value=N_config),
     direction=st.integers(min_value=0, max_value=1))
 @settings(max_examples=5)
 def test_get_neighbor_index(current_node, N, direction):
+    """
+    Test the `get_neighbor_index` function.
+
+    Args:
+    current_node (int): Current node in the network.
+    N (int): Total number of nodes in the network.
+    direction (int): Direction of movement, 0 for left, 1 for right.
+
+    Tests:
+    The function correctly calculates the neighboring node's index 
+
+    """
     current_node = current_node % N
     neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
     # Test for valid index
