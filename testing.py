@@ -1,6 +1,7 @@
 import random_walk
 import configparser
 import numpy as np
+import random
 import hypothesis
 from hypothesis import strategies as st
 from hypothesis import assume
@@ -57,6 +58,7 @@ def test_get_neighbor_index(current_node, N, direction):
     direction=st.integers(min_value=0, max_value=1) )
 @settings(max_examples=5, deadline=None)
 def test_synchronous_simulation(N, M, n_max, time_steps, direction):
+    random.seed(1)
     initial_network = random_walk.initialize_network(N, M, n_max) 
     def fixed_direction():
         return direction  # Always return the fixed direction (0 or 1) 
@@ -88,6 +90,7 @@ def test_synchronous_simulation(N, M, n_max, time_steps, direction):
     direction=st.integers(min_value=0, max_value=1))
 @settings(max_examples=5, deadline = None)
 def test_one_step_process(N, M, n_max, time_steps, direction):
+    random.seed(1)
     initial_network = random_walk.initialize_network(N, M, n_max)
     # Define a fixed direction function based on the input direction
     def fixed_direction():
