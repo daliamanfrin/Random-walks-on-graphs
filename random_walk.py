@@ -64,7 +64,7 @@ def move_particle(network, current_node, neighbor):
     return updated_network
 
 
-def synchronous_simulation(network, n_max, time_steps, random_direction):
+def synchronous_simulation(network, n_max, time_steps):
     """
     Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
 
@@ -85,7 +85,7 @@ def synchronous_simulation(network, n_max, time_steps, random_direction):
         update_network = network.copy()  
         for current_node in range(N):
             # Get random direction
-            direction = random_direction()  
+            direction = random.randint(0, 1)  
             # Get neighbor index
             neighbor = get_neighbor_index(current_node, N, direction)  
             # Only move if neighbor has capacity and current node is not empty
@@ -101,7 +101,7 @@ def synchronous_simulation(network, n_max, time_steps, random_direction):
     return particle_counts
 
 
-def one_step_process(network, n_max, time_steps, random_direction):
+def one_step_process(network, n_max, time_steps):
     """
     Simulate the particle movement using a one-step process, where the network is updated after each node completes its move.
 
@@ -121,7 +121,7 @@ def one_step_process(network, n_max, time_steps, random_direction):
         for current_node in range(N):
             if network[current_node] > 0:
                 # Get random direction
-                direction = random_direction()  
+                direction = random.randint(0, 1)  
                 # Get neighbor index
                 neighbor = get_neighbor_index(current_node, N, direction)  
                 # Only move if neighbor has capacity and current node is not empty
@@ -132,13 +132,3 @@ def one_step_process(network, n_max, time_steps, random_direction):
                 if time > 1000:
                     particle_counts.append(network.copy())  
     return particle_counts  
-
-
-def random_direction():
-    """
-    Generate a random direction for particle movement (0 for left, 1 for right).
-    
-    Returns:
-    int: 0 or 1 to determine the direction of particle movement.
-    """
-    return random.randint(0, 1)

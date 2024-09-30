@@ -27,9 +27,9 @@ network = random_walk.initialize_network(N, M, n_max)
 
 # Run the simulation based on the dynamics type
 if dynamics_type == 'synchronous':
-    particle_counts = random_walk.synchronous_simulation(network, n_max, time_steps, random_walk.random_direction)
+    particle_counts = random_walk.synchronous_simulation(network, n_max, time_steps)
 elif dynamics_type == 'one_step':
-    particle_counts = random_walk.one_step_process(network, n_max, time_steps, random_walk.random_direction)
+    particle_counts = random_walk.one_step_process(network, n_max, time_steps)
 else:
     raise ValueError("Invalid dynamics type specified in configuration file.")
 
