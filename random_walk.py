@@ -9,13 +9,11 @@ def initialize_network(N, M, n_max):
     M (int): Number of particles in each node at the start.
     n_max (int): Maximum allowed particles per node.
 
-    
     Returns:
     list: Initial configuration of the network.
     
     Raises:
     ValueError: If N or M is less than 1, or if M exceeds the maximum allowed value of n_max.
-
     """
     if N < 1 or M < 1:
         raise ValueError(f"Number of nodes and particles per node should be at least 1, got N = {N} and M = {M}")
@@ -72,8 +70,7 @@ def synchronous_simulation(network, n_max, time_steps):
     network (list): Initial state of the network.
     n_max (int): Maximum allowed particles per node.
     time_steps (int): Number of time steps to simulate.
-    random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
-
+    
     Returns:
     list: History of particle counts.
     """
@@ -109,8 +106,7 @@ def one_step_process(network, n_max, time_steps):
     network (list): Initial state of the network with particle counts.
     n_max (int): Maximum allowed particles per node.
     time_steps (int): Number of time steps to simulate.
-    random_direction (callable): A function that returns 0 or 1 to determine the direction of particle movement.
-
+    
     Returns:
     list: History of particle counts.
     """
