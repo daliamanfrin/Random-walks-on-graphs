@@ -1,9 +1,9 @@
 [settings]
 N = 50
-M = 5
+M = 35
 n_max = 40
 time_steps = 2000
-dynamics_type = one_step
+dynamics_type = synchronous
 seed_value = 5
 
 
