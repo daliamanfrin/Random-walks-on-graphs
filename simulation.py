@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import random
 from sys import argv
-random.seed(1)
+
 # Load configuration
 config = configparser.ConfigParser()
 config.read(sys.argv[1])
@@ -15,6 +15,9 @@ M = config.getint('settings', 'M')
 n_max = config.getint('settings', 'n_max')
 time_steps = config.getint('settings', 'time_steps')
 dynamics_type = config.get('settings', 'dynamics_type')  
+seed_value = config.get('settings', 'seed_value')  
+
+random.seed(seed_value)
 
 # Get paths from the configuration file
 simulation_data_path = config.get('paths', 'simulation_data')

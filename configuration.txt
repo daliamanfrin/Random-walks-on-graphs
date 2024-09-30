@@ -4,6 +4,7 @@ M = 5
 n_max = 40
 time_steps = 2000
 dynamics_type = one_step
+seed_value = 5
 
 
 [paths]
