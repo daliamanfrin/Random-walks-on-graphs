@@ -71,7 +71,6 @@ def test_get_neighbor_index(N):
         neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
         # Test that the neighbor index is valid (within bounds of the network)
         assert 0 <= neighbor_index < N
-        # Calculate the expected neighbor index based on direction
         if direction == 1:
             # Moving to the right: neighbor should be (current_node + 1) % N
             expected_neighbor = (current_node + 1) % N
@@ -107,7 +106,7 @@ def test_synchronous_simulation(N, M, n_max, time_steps):
     initial_network = random_walk.initialize_network(N, M, n_max)
     for seed_value in [0, 1]:
         random.seed(seed_value)
-        direction = random.randint(0,1)
+        direction = random.randint(0, 1)
         history = random_walk.synchronous_simulation(initial_network, n_max, time_steps)
         # Test that the total number of particles is conserved
         total_particles_initial = sum(initial_network)
@@ -119,12 +118,13 @@ def test_synchronous_simulation(N, M, n_max, time_steps):
             assert all(p <= n_max + 1 for p in state)
             # Ensure no node has negative particles
             assert all(p >= 0 for p in state)
-        # Test at most one particle has moved
         for time in range(2, len(history)):
             prev_state = history[time - 1]
             current_state = history[time]
             for node in range(N):
+                # Test at most one particle has moved in successive timesteps
                 assert np.abs(current_state[node] - prev_state[node]) <= 2 
+                # Test at most one particle per timestep has moved since the beginning
                 assert np.abs(current_state[node] - history[1][node]) <= 2 * time
                
 
@@ -151,34 +151,32 @@ def test_one_step_process(N, M, n_max, time_steps):
     At time t at most t particles have moved
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
-    random.seed(1)
     for seed_value in [0, 1]:
         random.seed(seed_value)
-        direction = random.randint(0,1)
+        direction = random.randint(0, 1)
         history = random_walk.one_step_process(initial_network, n_max, time_steps)
         # Test that the total number of particles is conserved
         total_particles_initial = sum(initial_network)
         total_particles_final = sum(history[-1])
         assert total_particles_initial == total_particles_final
         for state in history:
-            # For one step process, the maximum number of particles should never be exceeded
+            # Test the capacity is respected
             assert all(p <= n_max for p in state)
-            # The number of particles in any node should never be negative
+            # Test no node has a negative number of particles
             assert all(p >= 0 for p in state)
         for time in range(2, len(history)):
             prev_state = history[time - 1]
             current_state = history[time]
             for node in range(N):
-                # Test at most one particle has moved
+                # Test at most one particle has moved in successive timesteps
                 assert np.abs(current_state[node] - prev_state[node]) <= 1
-                # Test at most one particle per timestep has moved since the begin
+                # Test at most one particle per timestep has moved since the beginning
                 assert np.abs(current_state[node] - history[1][node]) <= time
  
 @given(
     N=st.integers(min_value=1, max_value=N_config),
     M=st.integers(min_value=1, max_value=M_config),
-    n_max=st.integers(min_value=M_config, max_value=n_max_config)
-)
+    n_max=st.integers(min_value=M_config, max_value=n_max_config))
 @settings(max_examples=5, deadline=None)
 def test_move_particle(N, M, n_max):
     """
@@ -195,10 +193,10 @@ def test_move_particle(N, M, n_max):
     The state of each node surpasses n_max by at most one
     At most one particle moves for each exchange
     """
-    current_node = random.randint(0,N-1)
+    current_node = random.randint(0, N-1)
     for seed_value in [0, 1]:
         random.seed(seed_value)
-        direction = random.randint(0,1)
+        direction = random.randint(0, 1)
         network_before = random_walk.initialize_network(N, M, n_max)
         neighbor = random_walk.get_neighbor_index(current_node, N, direction)  
         updated_network = random_walk.move_particle(network_before, current_node, neighbor)
