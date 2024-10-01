@@ -1,6 +1,6 @@
 [settings]
-N = 3
-M = 1
+N = 50
+M = 3
 n_max = 35
 time_steps = 2000
 dynamics_type = synchronous
