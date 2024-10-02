@@ -85,8 +85,10 @@ def synchronous_simulation(network, n_max, time_steps):
             direction = random.randint(0, 1)  
             # Get neighbor index
             neighbor = get_neighbor_index(current_node, N, direction)  
+            destination_not_full = network[neighbor] < n_max 
+            source_not_empty = network[current_node] > 0 
             # Only move if neighbor has capacity and current node is not empty
-            if network[neighbor] < n_max and network[current_node] > 0:
+            if destination_not_full and source_not_empty:
                 # Move the particle
                 update_network = move_particle(update_network, current_node, neighbor) 
         # Update the network with the new state after all nodes displacements
@@ -115,16 +117,17 @@ def one_step_process(network, n_max, time_steps):
     particle_counts.append(network.copy())
     for time in range(time_steps):
         for current_node in range(N):
-            if network[current_node] > 0:
-                # Get random direction
-                direction = random.randint(0, 1)  
-                # Get neighbor index
-                neighbor = get_neighbor_index(current_node, N, direction)  
-                # Only move if neighbor has capacity and current node is not empty
-                if network[neighbor] < n_max and network[current_node] > 0:
-                    # Move the particle
-                    network = move_particle(network, current_node, neighbor)  
-                # Let the system stabilize
-                if time > 1000:
-                    particle_counts.append(network.copy())  
+            # Get random direction
+            direction = random.randint(0, 1)  
+            # Get neighbor index
+            neighbor = get_neighbor_index(current_node, N, direction)  
+            destination_not_full = network[neighbor] < n_max 
+            source_not_empty = network[current_node] > 0 
+            # Only move if neighbor has capacity and current node is not empty
+            if destination_not_full and source_not_empty:
+                # Move the particle
+                network = move_particle(network, current_node, neighbor)  
+            # Let the system stabilize
+            if time > 1000:
+                particle_counts.append(network.copy())  
     return particle_counts  
