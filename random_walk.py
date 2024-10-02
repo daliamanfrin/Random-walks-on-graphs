@@ -62,7 +62,7 @@ def move_particle(network, current_node, neighbor):
     return updated_network
 
 
-def synchronous_simulation(network, n_max, time_steps):
+def synchronous_simulation(network, n_max, time_steps, collection_time):
     """
     Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
 
@@ -94,13 +94,13 @@ def synchronous_simulation(network, n_max, time_steps):
         # Update the network with the new state after all nodes displacements
         network = update_network  
         # Let the system stabilize
-        if time > 1000:
+        if time > collection_time:
             particle_counts.append(network.copy())  
 
     return particle_counts
 
 
-def one_step_process(network, n_max, time_steps):
+def one_step_process(network, n_max, time_steps, collection_time):
     """
     Simulate the particle movement using a one-step process, where the network is updated after each node completes its move.
 
@@ -128,6 +128,6 @@ def one_step_process(network, n_max, time_steps):
                 # Move the particle
                 network = move_particle(network, current_node, neighbor)  
             # Let the system stabilize
-            if time > 1000:
+            if time > collection_time:
                 particle_counts.append(network.copy())  
     return particle_counts  
