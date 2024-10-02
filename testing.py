@@ -31,14 +31,14 @@ def test_initialize_network(N, M, n_max):
     Test the `initialize_network` function.
 
     Args:
-    N (int): Number of nodes in the network.
-    M (int): Number of particles in each node at the start.
-    n_max (int): Maximum allowed particles per node.
+        N (int): Number of nodes in the network.
+        M (int): Number of particles in each node at the start.
+        n_max (int): Maximum allowed particles per node.
 
     Tests:
-    The function raises a `ValueError` when `M > n_max`.
-    The network has the correct number of nodes.
-    Each node is initialized with the correct number of particles.
+        The function raises a `ValueError` when `M > n_max`.
+        The network has the correct number of nodes.
+        Each node is initialized with the correct number of particles.
     """
     if M > n_max:
         # If M is greater than n_max, a ValueError should be raised
@@ -59,10 +59,10 @@ def test_get_neighbor_index(N):
     Test the `get_neighbor_index` function.
 
     Args:
-    N (int): Total number of nodes in the network.
+        N (int): Total number of nodes in the network.
 
     Tests:
-    The function correctly calculates the neighboring node's index for any node for both directions
+        The function correctly calculates the neighboring node's index for any node for both directions
     """
     current_node = random.randint(0,N)
     for seed_value in [0, 1]: 
@@ -91,17 +91,17 @@ def test_synchronous_simulation(N, M, n_max, time_steps):
     Test the `synchronous_simulation` function
 
     Args:
-    N (int): Number of nodes in the network.
-    M (int): Number of particles per node at the start.
-    n_max (int): Maximum number of particles a node can hold.
-    time_steps (int): Number of simulation time steps.
+        N (int): Number of nodes in the network.
+        M (int): Number of particles per node at the start.
+        n_max (int): Maximum number of particles a node can hold.
+        time_steps (int): Number of simulation time steps.
 
     Tests:
-    The number of particles is conserved throughout the simulation
-    The state of each node is never negative
-    The state of each node surpasses n_max by at most one
-    At most one particle moves for each timestep
-    At a time t at most 2t particles have moved
+        The number of particles is conserved throughout the simulation
+        The state of each node is never negative
+        The state of each node surpasses n_max by at most one
+        At most one particle moves for each timestep
+        At a time t at most 2t particles have moved
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     for seed_value in [0, 1]:
@@ -138,17 +138,17 @@ def test_one_step_process(N, M, n_max, time_steps):
     Test the `one_step_process` function
 
     Args:
-    N (int): Number of nodes in the network.
-    M (int): Number of particles per node at the start.
-    n_max (int): Maximum number of particles a node can hold.
-    time_steps (int): Number of simulation time steps.
+        N (int): Number of nodes in the network.
+        M (int): Number of particles per node at the start.
+        n_max (int): Maximum number of particles a node can hold.
+        time_steps (int): Number of simulation time steps.
 
     Tests:
-    The number of particles is conserved throughout the simulation
-    The state of each node is never negative
-    The state of each node surpasses n_max by at most one
-    At most one particle moves for each timestep
-    At time t at most t particles have moved
+        The number of particles is conserved throughout the simulation
+        The state of each node is never negative
+        The state of each node surpasses n_max by at most one
+        At most one particle moves for each timestep
+        At time t at most t particles have moved
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     for seed_value in [0, 1]:
@@ -183,15 +183,15 @@ def test_move_particle(N, M, n_max):
     Test the `move_particle` function
 
     Args:
-    N (int): Number of nodes in the network.
-    M (int): Number of particles per node at the start.
-    n_max (int): Maximum number of particles a node can hold.
+        N (int): Number of nodes in the network.
+        M (int): Number of particles per node at the start.
+        n_max (int): Maximum number of particles a node can hold.
 
     Tests:
-    The number of particles is conserved before and after the exchange
-    The state of each node is never negative
-    The state of each node surpasses n_max by at most one
-    At most one particle moves for each exchange
+        The number of particles is conserved before and after the exchange
+        The state of each node is never negative
+        The state of each node surpasses n_max by at most one
+        At most one particle moves for each exchange
     """
     current_node = random.randint(0, N-1)
     for seed_value in [0, 1]:
