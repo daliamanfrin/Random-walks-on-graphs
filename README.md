@@ -27,6 +27,15 @@ The code initializes the network with given parameters and performs a random wal
 - The file [plots](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/plot.py) contains the function that plots the counts of the states of nodes through the iterations. It uses the data generated during the simulation and saved. The paths to save the plot can be decided in configuration.txt. 
 
 
+## Installation
+To install the application, clone this repository and add the requirements.
+```
+git clone https://github.com/daliamanfrin/Random-walks-on-graphs
+cd Random-walks-on-graphs
+pip install -r requirements.txt
+```
+
+
 ## Usage
 To use the program:
 1. Choose desired configuration in the configuration file. Edit the existent one or create a new one following the same template, choosing parameters values, dynamics type and paths for saving intermediate results and plots.<br/> 
