@@ -77,7 +77,7 @@ def synchronous_simulation(network, n_max, time_steps, collection_time):
     N = len(network)
     particle_counts = []
     particle_counts.append(network.copy())
-    for time in range(time_steps):
+    for time in range(time_steps * N):
         # Copy network for synchronous updates
         update_network = network.copy()  
         for current_node in range(N):
@@ -94,7 +94,7 @@ def synchronous_simulation(network, n_max, time_steps, collection_time):
         # Update the network with the new state after all nodes displacements
         network = update_network  
         # Let the system stabilize
-        if time > collection_time:
+        if time > collection_time*N:
             particle_counts.append(network.copy())  
 
     return particle_counts
