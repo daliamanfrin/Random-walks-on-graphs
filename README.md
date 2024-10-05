@@ -54,5 +54,15 @@ python plot.py configuration.txt
 
 ### Example
 Images show distributions for one-step process (top) and synchronous dynamics (bottom) for a almost empty, almost congested and half-filled networks.
-Note that in the synchronous dynamics the theoretical maximal occupancy can be surpassed
+Note that in the synchronous dynamics the theoretical maximal occupancy can be surpassed.
+The example is reproducible using:<br/> 
+```
+N = 50
+M = 5/20/35
+n_max = 40
+time_steps = 2000
+collection_time = 1000
+seed_value = 5
+```
+
 ![config](./images/resulting_occupancy.png)
