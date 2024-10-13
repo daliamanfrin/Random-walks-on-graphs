@@ -56,11 +56,9 @@ def test_initialize_network(N, M, n_max):
 def test_get_neighbor_index():
     """
     Test the `get_neighbor_index` function with explicit direction values (0 for left, 1 for right).
-    Given the current node and the direction of movement.
-    Used before the movement is performed.
     
     Tests:
-        The function correctly calculates the neighboring node's index for any node for both directions
+        The function correctly calculates the neighboring node's index for all nodes for every N value.
     """
     for N in range(1, N_config):
         for current_node in range(0, N):
@@ -140,12 +138,12 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
         collection_time (int): Number of time steps after which acquisition starts.
 
     Tests:
-        The function raises a ValueError when collection_time >= time_steps
-        The number of particles is conserved throughout the simulation
-        The state of each node is never negative
-        The state of each node surpasses n_max by at most one
-        At most one particle moves for each timestep
-        At a time t at most 2t particles have moved
+        The function raises a ValueError when collection_time is greater than time_steps.
+        The number of particles is conserved throughout the simulation.
+        The state of each node is never negative.
+        The state of each node surpasses n_max by at most one.
+        At most one particle moves for each timestep.
+        At a time t at most 2t particles have moved.
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     if collection_time >= time_steps:
@@ -162,7 +160,7 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
         for state in history:
             # Test the capacity is respected
             assert all(p <= n_max + 1 for p in state)
-            # # Test no node has a negative number of particles
+            # Test no node has a negative number of particles
             assert all(p >= 0 for p in state)
         for time in range(2, len(history)):
             prev_state = history[time - 1]
@@ -182,7 +180,7 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
 @settings(max_examples=5, deadline = None)
 def test_one_step_process(N, M, n_max, time_steps, collection_time):
     """
-    Test the `one_step_process` function
+    Test the `one_step_process` function.
 
     Args:
         N (int): Number of nodes in the network.
@@ -192,12 +190,12 @@ def test_one_step_process(N, M, n_max, time_steps, collection_time):
         collection_time (int): Number of time steps after which acquisition starts.
 
     Tests:
-        The function raises a ValueError when collection_time >= time_steps
-        The number of particles is conserved throughout the simulation
-        The state of each node is never negative
-        The state of each node surpasses n_max by at most one
-        At most one particle moves for each timestep
-        At time t at most t particles have moved
+        The function raises a ValueError when collection_time is greater than time_steps.
+        The number of particles is conserved throughout the simulation.
+        The state of each node is never negative.
+        The state of each node surpasses n_max by at most one.
+        At most one particle moves for each timestep.
+        At time t at most t particles have moved.
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     if collection_time >= time_steps:
