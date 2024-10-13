@@ -1,0 +1,7 @@
+[settings]
+N = 20
+M = 10
+n_max = 20
+time_steps = 2000
+collection_time = 3000
+

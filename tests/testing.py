@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..") 
 import random_walk
 import configparser
 import numpy as np
