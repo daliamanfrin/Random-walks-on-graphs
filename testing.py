@@ -146,6 +146,7 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     if collection_time >= time_steps:
+        # If time_steps is smaller than collection_time, a ValueError should be raised
         with pytest.raises(ValueError):
             random_walk.synchronous_simulation(initial_network, n_max, time_steps, collection_time)
     else:  
@@ -156,9 +157,9 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
         assert total_particles_initial == total_particles_final
         # Test that the particles per node are within valid bounds 
         for state in history:
-            # Ensure no node exceeds the maximum allowed particles
+            # Test the capacity is respected
             assert all(p <= n_max + 1 for p in state)
-            # Ensure no node has negative particles
+            # # Test no node has a negative number of particles
             assert all(p >= 0 for p in state)
         for time in range(2, len(history)):
             prev_state = history[time - 1]
@@ -196,6 +197,7 @@ def test_one_step_process(N, M, n_max, time_steps, collection_time):
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
     if collection_time >= time_steps:
+        # If time_steps is smaller than collection_time, a ValueError should be raised
         with pytest.raises(ValueError):
             random_walk.synchronous_simulation(initial_network, n_max, time_steps, collection_time)
     else:  
