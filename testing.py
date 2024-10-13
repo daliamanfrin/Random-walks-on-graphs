@@ -3,29 +3,22 @@ import configparser
 import numpy as np
 import random
 import pytest
-import unittest
-import hypothesis
 from hypothesis import strategies as st
-from hypothesis import assume
 from hypothesis import given, settings
 
-# Load the configuration from the txt file
-def load_configuration(file_path):
-    config = configparser.ConfigParser()
-    config.read(file_path)
-    return config
-
-config = load_configuration('configuration_test.txt')
+config = configparser.ConfigParser()
+config.read('configuration_test.txt')
 
 # Extract values from the configuration
 N_config = int(config['settings']['N'])
 M_config = int(config['settings']['M'])
 n_max_config = int(config['settings']['n_max'])
 time_steps_config = int(config['settings']['time_steps'])
+collection_time_config = int(config['settings']['collection_time'])
 
 @given(N=st.integers(min_value=0, max_value=N_config), 
        M=st.integers(min_value=0, max_value=n_max_config), 
-       n_max=st.integers(min_value=0, max_value=n_max_config))
+       n_max=st.integers(min_value=1, max_value=n_max_config))
 @settings(max_examples=50)
 def test_initialize_network(N, M, n_max):
     """
@@ -61,35 +54,78 @@ def test_initialize_network(N, M, n_max):
 def test_get_neighbor_index():
     """
     Test the `get_neighbor_index` function with explicit direction values (0 for left, 1 for right).
+    Given the current node and the direction of movement.
+    Used before the movement is performed.
     
     Tests:
         The function correctly calculates the neighboring node's index for any node for both directions
     """
-    for N in range(1, N_config + 1):
-        current_node = random.randint(0, N) 
-        
-        # Test for direction = 1 (moving to the right)
-        direction = 1
-        neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
-        expected_neighbor = (current_node + 1) % N
-        assert 0 <= neighbor_index < N  # Neighbor index is within bounds
-        assert neighbor_index == expected_neighbor  # Correct neighbor is returned
+    for N in range(1, N_config):
+        for current_node in range(0, N):
+            # Test for direction = 1 (moving to the right)
+            direction = 1
+            neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
+            expected_neighbor = (current_node + 1) % N
+            # Test neighbor index is within bounds
+            assert 0 <= neighbor_index < N  
+            # Test correct neighbor is returned
+            assert neighbor_index == expected_neighbor  
+            # Test for direction = 0 (moving to the left)
+            direction = 0
+            neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
+            expected_neighbor = (current_node - 1) % N
+            # Test neighbor index is within bounds
+            assert 0 <= neighbor_index < N  
+            # Test correct neighbor is returned
+            assert neighbor_index == expected_neighbor  
 
-        # Test for direction = 0 (moving to the left)
-        direction = 0
-        neighbor_index = random_walk.get_neighbor_index(current_node, N, direction)
-        expected_neighbor = (current_node - 1) % N
-        assert 0 <= neighbor_index < N  # Neighbor index is within bounds
-        assert neighbor_index == expected_neighbor  # Correct neighbor is returned
-test_get_neighbor_index()
 
+@given(N=st.integers(min_value=1, max_value=N_config),  
+       M=st.integers(min_value=1, max_value=M_config),
+       n_max=st.integers(min_value=M_config, max_value=n_max_config))
+@settings(max_examples=5, deadline=None)
+def test_move_particle(N, M, n_max):
+    """
+    Test the `move_particle` function.
+
+    Args:
+        N (int): Number of nodes in the network.
+        M (int): Number of particles per node at the start.
+        n_max (int): Maximum number of particles a node can hold.
+
+    Tests:
+        The number of particles is conserved before and after the exchange.
+        The state of each node is never negative.
+        The state of each node surpasses n_max by at most one.
+        At most one particle moves for each exchange.
+    """
+    # Initialize network with N nodes, M particles
+    network_before = random_walk.initialize_network(N, M, n_max)
+    for current_node in range(N):
+        for direction in [0, 1]: 
+            # Determine the neighbor node based on the current direction
+            neighbor = random_walk.get_neighbor_index(current_node, N, direction)
+            # Move a particle from current_node to its neighbor
+            updated_network = random_walk.move_particle(network_before, current_node, neighbor)
+            # Test total number of particles is conserved in the exchange
+            total_particles_before = sum(network_before)
+            total_particles_after = sum(updated_network)
+            assert total_particles_before == total_particles_after
+            # Test no node has a negative number of particles
+            assert all(p >= 0 for p in updated_network)
+            # Test the capacity is respected
+            assert all(p <= n_max + 1 for p in updated_network)
+            for node in range(N):
+                # Test at most one particle has moved
+                assert np.abs(network_before[node] - updated_network[node]) <= 1
 
 @given(N=st.integers(min_value=1, max_value=N_config),
        M=st.integers(min_value=1, max_value=M_config), 
        n_max=st.integers(min_value=M_config, max_value=n_max_config), 
-       time_steps=st.integers(min_value=1000, max_value=time_steps_config))
+       time_steps=st.integers(min_value=1, max_value=time_steps_config),
+       collection_time=st.integers(min_value=1, max_value=collection_time_config))
 @settings(max_examples=5, deadline=None)
-def test_synchronous_simulation(N, M, n_max, time_steps):
+def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
     """
     Test the `synchronous_simulation` function
 
@@ -106,10 +142,12 @@ def test_synchronous_simulation(N, M, n_max, time_steps):
         At most one particle moves for each timestep
         At a time t at most 2t particles have moved
     """
+    
     initial_network = random_walk.initialize_network(N, M, n_max)
-    for seed_value in [0, 1]:
-        random.seed(seed_value)
-        direction = random.randint(0, 1)
+    if collection_time >= time_steps:
+        with pytest.raises(ValueError):
+            random_walk.synchronous_simulation(initial_network, n_max, time_steps, collection_time)
+    else:  
         history = random_walk.synchronous_simulation(initial_network, n_max, time_steps, collection_time)
         # Test that the total number of particles is conserved
         total_particles_initial = sum(initial_network)
@@ -134,9 +172,10 @@ def test_synchronous_simulation(N, M, n_max, time_steps):
 @given(N=st.integers(min_value=1, max_value=N_config),
     M=st.integers(min_value=1, max_value=M_config),
     n_max=st.integers(min_value=M_config, max_value=n_max_config),
-    time_steps=st.integers(min_value=1000, max_value=time_steps_config))
+    time_steps=st.integers(min_value=1, max_value=time_steps_config),
+    collection_time=st.integers(min_value=1, max_value=collection_time_config))
 @settings(max_examples=5, deadline = None)
-def test_one_step_process(N, M, n_max, time_steps):
+def test_one_step_process(N, M, n_max, time_steps, collection_time):
     """
     Test the `one_step_process` function
 
@@ -154,9 +193,11 @@ def test_one_step_process(N, M, n_max, time_steps):
         At time t at most t particles have moved
     """
     initial_network = random_walk.initialize_network(N, M, n_max)
-    for seed_value in [0, 1]:
-        random.seed(seed_value)
-        direction = random.randint(0, 1)
+    if collection_time >= time_steps:
+        with pytest.raises(ValueError):
+            random_walk.synchronous_simulation(initial_network, n_max, time_steps, collection_time)
+    else:  
+        initial_network = random_walk.initialize_network(N, M, n_max)
         history = random_walk.one_step_process(initial_network, n_max, time_steps, collection_time)
         # Test that the total number of particles is conserved
         total_particles_initial = sum(initial_network)
@@ -175,42 +216,3 @@ def test_one_step_process(N, M, n_max, time_steps):
                 assert np.abs(current_state[node] - prev_state[node]) <= 1
                 # Test at most one particle per timestep has moved since the beginning
                 assert np.abs(current_state[node] - history[1][node]) <= time
- 
-@given(
-    N=st.integers(min_value=1, max_value=N_config),
-    M=st.integers(min_value=1, max_value=M_config),
-    n_max=st.integers(min_value=M_config, max_value=n_max_config))
-@settings(max_examples=5, deadline=None)
-def test_move_particle(N, M, n_max):
-    """
-    Test the `move_particle` function
-
-    Args:
-        N (int): Number of nodes in the network.
-        M (int): Number of particles per node at the start.
-        n_max (int): Maximum number of particles a node can hold.
-
-    Tests:
-        The number of particles is conserved before and after the exchange
-        The state of each node is never negative
-        The state of each node surpasses n_max by at most one
-        At most one particle moves for each exchange
-    """
-    current_node = random.randint(0, N-1)
-    for seed_value in [0, 1]:
-        random.seed(seed_value)
-        direction = random.randint(0, 1)
-        network_before = random_walk.initialize_network(N, M, n_max)
-        neighbor = random_walk.get_neighbor_index(current_node, N, direction)  
-        updated_network = random_walk.move_particle(network_before, current_node, neighbor)
-        # Test total number of particles is conserved in the exchange
-        total_particles_before = sum(network_before)
-        total_particles_after = sum(updated_network)
-        assert total_particles_before == total_particles_after
-        # Test no node has a negative number of particles
-        assert all(p >= 0 for p in updated_network)
-        # Test the capacity is respected
-        assert all(p <= n_max + 1 for p in updated_network)
-        for node in range(N):
-            # Test at most one particle has moved
-            assert np.abs(network_before[node] - updated_network[node]) <= 1
