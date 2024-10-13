@@ -119,6 +119,7 @@ def test_move_particle(N, M, n_max):
                 # Test at most one particle has moved
                 assert np.abs(network_before[node] - updated_network[node]) <= 1
 
+
 @given(N=st.integers(min_value=1, max_value=N_config),
        M=st.integers(min_value=1, max_value=M_config), 
        n_max=st.integers(min_value=M_config, max_value=n_max_config), 
@@ -136,13 +137,13 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
         time_steps (int): Number of simulation time steps.
 
     Tests:
+        The function raises a `ValueError` when `collection_time` >= `time_steps`
         The number of particles is conserved throughout the simulation
         The state of each node is never negative
         The state of each node surpasses n_max by at most one
         At most one particle moves for each timestep
         At a time t at most 2t particles have moved
     """
-    
     initial_network = random_walk.initialize_network(N, M, n_max)
     if collection_time >= time_steps:
         with pytest.raises(ValueError):
@@ -167,8 +168,8 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
                 assert np.abs(current_state[node] - prev_state[node]) <= 2 
                 # Test at most one particle per timestep has moved since the beginning
                 assert np.abs(current_state[node] - history[1][node]) <= 2 * time
+             
                
-
 @given(N=st.integers(min_value=1, max_value=N_config),
     M=st.integers(min_value=1, max_value=M_config),
     n_max=st.integers(min_value=M_config, max_value=n_max_config),
@@ -186,6 +187,7 @@ def test_one_step_process(N, M, n_max, time_steps, collection_time):
         time_steps (int): Number of simulation time steps.
 
     Tests:
+        The function raises a `ValueError` when `collection_time` >= `time_steps`
         The number of particles is conserved throughout the simulation
         The state of each node is never negative
         The state of each node surpasses n_max by at most one
