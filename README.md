@@ -4,7 +4,7 @@ In this network, the random walk behavior represents an equal probability for a 
 This random walk can be simulated in two different types of dynamics: one-step or synchronous. In the one-step approximation, the evolution is the one-step master equation: <br /> 
 
 <p align="center">
-<img src="https://latex.codecogs.com/svg.image?\frac{\partial\rho}{\partial&space;t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^&plus;_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" title="\frac{\partial\rho}{\partial t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^+_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" />
+<img src="https://latex.codecogs.com/png.image?\inline&space;\large&space;\dpi{150}\bg{white}\frac{\partial\rho}{\partial&space;t}(\vec{n},t)=\sum_{i,j}[E^-_{i}E^&plus;_{j}\pi_{ij}(n_{j})-\pi_{ji}(n_{i})]\rho(\vec{n},t)" />
 </p>
 
 and the information is instaneously updated after a single node performs movement.
