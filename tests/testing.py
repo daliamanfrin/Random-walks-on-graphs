@@ -32,8 +32,8 @@ def test_initialize_network(N, M, n_max):
         n_max (int): Maximum allowed particles per node.
 
     Tests:
-        The function raises a `ValueError` when `N < 1` or `M < 1`.
-        The function raises a `ValueError` when `M > n_max`.
+        The function raises a ValueError when N < 1 or M < 1.
+        The function raises a ValueError when M > n_max.
         The network has the correct number of nodes.
         Each node is initialized with the correct number of particles.
     """
@@ -137,9 +137,10 @@ def test_synchronous_simulation(N, M, n_max, time_steps, collection_time):
         M (int): Number of particles per node at the start.
         n_max (int): Maximum number of particles a node can hold.
         time_steps (int): Number of simulation time steps.
+        collection_time (int): Number of time steps after which acquisition starts.
 
     Tests:
-        The function raises a `ValueError` when `collection_time` >= `time_steps`
+        The function raises a ValueError when collection_time >= time_steps
         The number of particles is conserved throughout the simulation
         The state of each node is never negative
         The state of each node surpasses n_max by at most one
@@ -188,9 +189,10 @@ def test_one_step_process(N, M, n_max, time_steps, collection_time):
         M (int): Number of particles per node at the start.
         n_max (int): Maximum number of particles a node can hold.
         time_steps (int): Number of simulation time steps.
+        collection_time (int): Number of time steps after which acquisition starts.
 
     Tests:
-        The function raises a `ValueError` when `collection_time` >= `time_steps`
+        The function raises a ValueError when collection_time >= time_steps
         The number of particles is conserved throughout the simulation
         The state of each node is never negative
         The state of each node surpasses n_max by at most one

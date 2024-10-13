@@ -64,15 +64,19 @@ def move_particle(network, current_node, neighbor):
 
 def synchronous_simulation(network, n_max, time_steps, collection_time):
     """
-    Simulate the particle movement using a synchronous process, where all nodes are updated simultaneously at each time step.
+    Simulate the particle movement using a synchronous process, where the network is updated after all nodes complete their moves.
 
     Args:
         network (list): Initial state of the network.
         n_max (int): Maximum allowed particles per node.
         time_steps (int): Number of time steps to simulate.
+        collection_time (int): Number of time steps after which acquisition starts.
     
     Returns:
         list: History of particle counts.
+
+    Raises:
+        ValueError: If collection_time is larger than time_steps.
     """
     if collection_time >= time_steps:
         raise ValueError(f"Time of collection should be smaller than the total time steps, got collection_time = {collection_time} and time_steps = {time_steps}")
@@ -110,9 +114,13 @@ def one_step_process(network, n_max, time_steps, collection_time):
         network (list): Initial state of the network with particle counts.
         n_max (int): Maximum allowed particles per node.
         time_steps (int): Number of time steps to simulate.
-    
+        collection_time (int): Number of time steps after which acquisition starts.
+
     Returns:
         list: History of particle counts.
+
+    Raises:
+        ValueError: If collection_time is larger than time_steps.
     """
     if collection_time >= time_steps:
         raise ValueError(f"Time of collection should be smaller than the total time steps, got collection_time = {collection_time} and time_steps = {time_steps}")
