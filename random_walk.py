@@ -74,6 +74,8 @@ def synchronous_simulation(network, n_max, time_steps, collection_time):
     Returns:
         list: History of particle counts.
     """
+    if collection_time >= time_steps:
+        raise ValueError(f"Time of collection should be smaller than the total time steps, got collection_time = {collection_time} and time_steps = {time_steps}")
     N = len(network)
     particle_counts = []
     particle_counts.append(network.copy())
@@ -112,6 +114,8 @@ def one_step_process(network, n_max, time_steps, collection_time):
     Returns:
         list: History of particle counts.
     """
+    if collection_time >= time_steps:
+        raise ValueError(f"Time of collection should be smaller than the total time steps, got collection_time = {collection_time} and time_steps = {time_steps}")
     N = len(network)
     particle_counts = []
     particle_counts.append(network.copy())
