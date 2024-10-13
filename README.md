@@ -18,7 +18,7 @@ The code initializes the network with given parameters and performs a random wal
 ## Structure
 - The file [random_walk](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/random_walk.py) contains the definition of all the functions, from the initialization of the network to the definition of the random walk. Functions include the choice of the neighbor based on the random direction and the definition of a function for performing the jumps for a single node (`move_particle`). Finally the two functions for the types of dynamics, which both use `move_particle`.
 
-- The [testing](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/testing.py) file tests the functions in the previous file, using hypotesis, to ensure correct behavior. Can be run with pytest.
+- The tests folder contains the [testing](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/tests/testing.py) file tests the functions in the previous file, to ensure correct behavior; and the [configuration_tests](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/tests/configuration_test.txt) file to have a configuration specific to testing.
 
 - The [configuration](https://github.com/daliamanfrin/Random-walks-on-graphs/blob/main/configuration.txt) file contains the definitions of the parameters used in the simulation: number of nodes (`N`), initial number of particle per node (`M`), number of timesteps of the simulation (`time_steps`), maximal occupancy (`n_max`). The type of dynamics is to be chosen between `one_step` and `synchronous`. Lastly the paths can be set up to save results data and plots. 
 
